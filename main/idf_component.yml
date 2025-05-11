@@ -1,0 +1,8 @@
+dependencies:
+  espressif/esp_lvgl_port: ^2.5.0
+  lvgl/lvgl:
+    version: "9.2.2"
+    public: true
+
+  esp_lcd_nv3007:
+    git: git@github.com:lz00qs/esp_lcd_nv3007.git
