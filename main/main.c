@@ -103,11 +103,11 @@ static esp_err_t app_lvgl_init(void)
 {
     /* Initialize LVGL */
     const lvgl_port_cfg_t lvgl_cfg = {
-        .task_priority = 0,       /* LVGL task priority */
-        .task_stack = 10240,       /* LVGL task stack size */
+        .task_priority = 1,       /* LVGL task priority */
+        .task_stack = 102400,      /* LVGL task stack size */
         .task_affinity = -1,      /* LVGL task pinned to core (-1 is no affinity) */
         .task_max_sleep_ms = 500, /* Maximum sleep in LVGL task */
-        .timer_period_ms = 5      /* LVGL timer tick period in ms */
+        .timer_period_ms = 1      /* LVGL timer tick period in ms */
     };
     ESP_RETURN_ON_ERROR(lvgl_port_init(&lvgl_cfg), TAG, "LVGL port initialization failed");
 
@@ -118,12 +118,12 @@ static esp_err_t app_lvgl_init(void)
         .panel_handle = lcd_panel,
         .buffer_size = LCD_H_RES * LCD_DRAW_BUFF_HEIGHT,
         .double_buffer = LCD_DRAW_BUFF_DOUBLE,
-        .hres = LCD_H_RES,
-        .vres = LCD_V_RES,
+        .hres = LCD_V_RES,
+        .vres = LCD_H_RES,
         .monochrome = false,
         .rotation = {
-            .swap_xy = false,
-            .mirror_x = false,
+            .swap_xy = true,
+            .mirror_x = true,
             .mirror_y = false,
         },
 #if LVGL_VERSION_MAJOR >= 9
@@ -150,7 +150,8 @@ void app_main(void)
     /* LVGL initialization */
     ESP_ERROR_CHECK(app_lvgl_init());
 
-    lv_demo_widgets();
+    // lv_demo_widgets();
+    lv_demo_benchmark();
 
     while (1)
     {
